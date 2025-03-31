@@ -1,0 +1,16 @@
+<ul *ngIf="iceBreaker.id" class="flex flex-col items-end gap-3">
+  <app-call-to-action
+    *ngFor="let callToAction of iceBreaker.call_to_actions; let i = index"
+    [callToAction]="callToAction"
+    [iceBreakerId]="this.iceBreaker.id"
+    (remove)="deleteCallToAction(i)"
+    class="contents"
+  ></app-call-to-action>
+</ul>
+<button
+  *ngIf="iceBreaker?.call_to_actions?.length! < 4"
+  (click)="addCallToAction()"
+  class="rounded-full bg-indigo-600 mt-3 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+>
+  Add
+</button>

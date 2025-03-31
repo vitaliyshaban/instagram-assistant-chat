@@ -1,0 +1,46 @@
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div>
+      <label
+        for="email"
+        class="block text-sm font-medium leading-6 text-gray-900"
+        >Button name</label
+      >
+      <div class="mt-2">
+        <input
+          type="text"
+          formControlName="title"
+          name="title"
+          id="title"
+          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+          placeholder="name"
+        />
+      </div>
+    </div>
+    <div class="mt-3">
+      <label
+        for="email"
+        class="block text-sm font-medium leading-6 text-gray-900"
+        >URL</label
+      >
+      <div class="mt-2">
+        <input
+          type="text"
+          formControlName="url"
+          name="url"
+          id="url"
+          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+          placeholder="https://"
+        />
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="bg-indigo-600 flex !items-stretch !p-0 text-white">
+  <button class="flex-1 hover:bg-indigo-500" mat-button mat-dialog-close>
+    Cancel
+  </button>
+  <button class="flex-1 hover:bg-indigo-500" mat-button (click)="add()">
+    {{data ? 'Save' : 'Add'}}
+  </button>
+</mat-dialog-actions>

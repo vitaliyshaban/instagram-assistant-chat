@@ -1,0 +1,25 @@
+<div>
+  <form [formGroup]="form">
+    <div>
+      <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Link API</label>
+      <div class="mt-2">
+        <input type="text" [value]="form.value.url_api" formControlName="url_api" name="url_api" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="https://graph.facebook.com" aria-describedby="email-description">
+      </div>
+      <!-- <p class="mt-2 text-sm text-gray-500" id="email-description">We'll only use this for spam.</p> -->
+    </div>
+    <div class="my-4">
+      <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Token API</label>
+      <div class="mt-2">
+        <input type="text" [value]="form.value.token" formControlName="token" name="token" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="EAAQmakQXRRIBOyxwIKbi2vY8GL..." aria-describedby="email-description">
+      </div>
+      <!-- <p class="mt-2 text-sm text-gray-500" id="email-description">We'll only use this for spam.</p> -->
+    </div>
+    <div class="my-4">
+      <button type="button" (click)="connect()" class="flex items-center gap-x-1.5 rounded-md px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm" [ngClass]="{ 'bg-green-700 hover:bg-green-600' : connected, 'bg-red-700 hover:bg-red-600': !connected}">
+        <svg *ngIf="connected" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+        {{connected ? 'Connected' : 'Connect'}}
+      </button>
+    </div>
+
+  </form>
+</div>

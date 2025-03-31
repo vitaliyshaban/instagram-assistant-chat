@@ -1,0 +1,166 @@
+<div
+  class="rounded-lg shadow-lg mb-8 overflow-hidden w-[280px] flex-none bg-white text-black box-border group"
+>
+  <form [formGroup]="form">
+    <div class="min-h-[280px] bg-slate-400 relative flex items-stretch justify-stretch">
+      <div class="w-full flex items-center justify-center flex-1 relative">
+        <input class="absolute left-0 top-0 right-0 bottom-0 cursor-pointer opacity-0" type="file" (change)="onFileSelected($event)" />
+        <img *ngIf="card.image_url || selectedFile" class="w-full" [src]="card.image_url ? card.image_url : imageUrl" alt="" />
+        <svg *ngIf="!card.image_url" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+      </div>
+      <div class="hidden group-hover:block absolute left-0 bottom-0 px-2">
+        <button
+          type="button"
+          *ngIf="!edit"
+          (click)="editCard()"
+          class="hover:bg-slate-300/30 rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20px"
+            viewBox="0 0 24 24"
+            width="20px"
+            fill="#e8eaed"
+          >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          *ngIf="edit && !card.id"
+          (click)="addCard()"
+          class="hover:bg-slate-300/30 rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20px"
+            viewBox="0 0 24 24"
+            width="20px"
+            fill="#e8eaed"
+          >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          *ngIf="edit && card.id"
+          [disabled]="form.invalid"
+          (click)="saveCard()"
+          class="hover:bg-slate-300/30 rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20px"
+            viewBox="0 0 24 24"
+            width="20px"
+            fill="#e8eaed"
+          >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"
+            />
+          </svg>
+        </button>
+        <button
+          class="hover:bg-slate-300/30 rounded-md"
+          type="button"
+          (click)="deleteCard()"
+          *ngIf="edit && card.id"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="px-4 py-3">
+      <div class="relative">
+        <b *ngIf="!edit">{{ form.value.title }}</b>
+        <input
+          class="w-full"
+          *ngIf="edit"
+          [value]="form.value.title"
+          type="text"
+          placeholder="Title"
+          id="title"
+          formControlName="title"
+          name="title"
+        />
+        <div class="text-xs text-red-500" *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+          Title is required.
+        </div>  
+      </div>
+      <div class="text-xs relative">
+        <span *ngIf="!edit">{{ form.value.subtitle }}</span>
+        <input
+          class="w-full"
+          *ngIf="edit"
+          [value]="form.value.subtitle"
+          type="text"
+          placeholder="Sub Title"
+          formControlName="subtitle"
+          name="subtitle"
+        />
+        <div class="text-xs text-red-500" *ngIf="form.get('subtitle')?.invalid && form.get('subtitle')?.touched">
+          Subtitle is required.
+        </div>  
+      </div>
+      <div class="flex gap-1 flex-col mt-3 text-center">
+        <div *ngFor="let button of card.buttons" class="flex flex-col gap-2 relative">
+          <button (click)="editButton(button.id!)" class="absolute top-0 left-0 bottom-0 px-1 rounded-md hover:bg-slate-500 hidden group-hover:block">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+          </button>
+          <button
+          type="button"
+          *ngIf="button.type === 'postback'"
+          class="bg-slate-700 text-white font-bold py-1 px-2 rounded-md flex-1"
+          >
+            {{ button.title }}
+          </button>
+          <a
+          type="button"
+          *ngIf="button.type === 'web_url'"
+          target="_blank"
+          [href]="button.url"
+          class="bg-slate-700 text-white font-bold py-1 px-2 rounded-md flex-1"
+          >
+            {{ button.title }}
+          </a>
+          <button (click)="deleteButton(button.id!)" class="absolute top-0 right-0 bottom-0 px-1 rounded-md hover:bg-slate-500 hidden group-hover:block">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
+          </button>
+        </div>
+        <div *ngIf="edit">
+          <button
+            type="button"
+            mat-button [matMenuTriggerFor]="menu"
+            class="rounded-full bg-indigo-600 mt-3 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 w-full"
+          >
+            Add Button
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="addButton('url')" mat-raised-button mat-menu-item>Button URL</button>
+            <button mat-menu-item [matMenuTriggerFor]="template">Template</button>
+          </mat-menu>
+          <mat-menu #template="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="text">Text</button>
+            <button mat-menu-item [matMenuTriggerFor]="button">Button</button>
+          </mat-menu>
+          <mat-menu #text="matMenu">
+            <button mat-menu-item (click)="addTextTemplate('postback')">
+              <span class="flex gap-2 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                add new
+              </span>
+            </button>
+          </mat-menu>
+          <mat-menu #button="matMenu">
+            <button mat-menu-item>Button</button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

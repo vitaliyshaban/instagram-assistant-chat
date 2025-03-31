@@ -1,0 +1,12 @@
+
+<div *ngIf="!baseTemplates.length">
+  <p>Base Template doesn't exist yet. But you can create it.</p>
+  <button type="button" (click)="createBaseTemplates()" class="rounded-md bg-indigo-600 my-3 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create Base Template</button>
+</div>
+<h1 *ngIf="baseTemplates.length" class="mb-3 text-2xl font-bold">{{baseTemplates[baseTemplateIndex].title}}</h1>
+<app-instagram-template
+  *ngIf="baseTemplates.length"
+  class="contents"
+  [componentData]="baseTemplates[baseTemplateIndex]"
+  [component]="baseTemplateComponent"
+></app-instagram-template>

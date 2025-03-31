@@ -1,0 +1,5 @@
+<div *ngIf="data.length" class="overflow-x-auto w-full">
+  <div class="flex gap-2 pr-2">
+    <app-card class="contents" *ngFor="let card of data; let i = index" [card]="card"></app-card>
+  </div>
+</div>

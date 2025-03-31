@@ -1,0 +1,42 @@
+<li class="flex items-center gap-1 group">
+  <button (click)="delete()" *ngIf="editElement">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" class="fill-red-500" viewBox="0 0 24 24" width="24px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
+  </button>
+  <button (click)="save()" class="" *ngIf="editElement && callToAction.id">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" class="fill-green-500" viewBox="0 0 24 24" width="24px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg>
+  </button>
+  <button (click)="add()" *ngIf="!callToAction.id">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+  </button>
+  <button *ngIf="!editElement" (click)="edit()" class="hidden group-hover:block">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+  </button>
+  <div class="rounded-full border px-4 py-1 relative ml-1 cursor-pointer text-right">
+    <span *ngIf="!editElement">{{callToAction.question}}</span>
+    <input class="bg-transparent border-none p-0" (change)="changeActionName($event)" type="text" [value]="callToAction.question" *ngIf="editElement">
+    <button *ngIf="!editElement" mat-button [matMenuTriggerFor]="menu" class="hidden group-hover:block bg-green-600 hover:bg-green-400 rounded-full px-1 py-0 text-[10px] absolute right-3 bottom-[-9px] z-10 whitespace-nowrap">
+      add action
+    </button>
+    <mat-menu #menu="matMenu">
+      <button (onMenuOpen)="openBase()" mat-menu-item [matMenuTriggerFor]="bases">Base Templates</button>
+      <button (onMenuOpen)="openText()" mat-menu-item [matMenuTriggerFor]="texts">Text templates</button>
+      <button (onMenuOpen)="openButton()" mat-menu-item [matMenuTriggerFor]="buttons">Button Templates</button>
+    </mat-menu>
+    <mat-menu #bases="matMenu">
+      <button *ngFor="let item of baseTemplates" (click)="addAction(item)" mat-menu-item>{{item.title}}</button>
+      <button [routerLink]="['/base-templates']" mat-menu-item>
+        <span class="flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" class="fill-black" viewBox="0 0 24 24" width="20px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Create
+        </span>
+      </button>
+    </mat-menu> 
+    <mat-menu #texts="matMenu">
+      <button *ngFor="let item of textTemplates" mat-menu-item>{{item.title}}</button>
+    </mat-menu>
+    <mat-menu #buttons="matMenu">
+      <button *ngFor="let item of buttonTemplates" mat-menu-item>{{item.title}}</button>
+    </mat-menu>
+  </div>
+</li>
+<li *ngIf="callToAction.payload" class="border border-white bg-white text-black px-2 py-1 rounded-full">{{callToAction.payload}}</li>

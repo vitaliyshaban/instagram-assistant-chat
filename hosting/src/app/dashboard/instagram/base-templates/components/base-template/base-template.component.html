@@ -1,0 +1,11 @@
+<div *ngIf="data.elements?.length" #scrollContainer class="overflow-x-auto w-full">
+  <div class="flex gap-2 pr-2">
+    <app-card class="contents" *ngFor="let card of data.elements; let i = index" [templateId]="data.id!" [card]="card" (remove)="deleteCard(i)" [index]="i"></app-card>
+  </div>
+</div>
+<button
+  (click)="addCard()"
+  class="rounded-full bg-indigo-600 mt-3 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 absolute bottom-2 right-2"
+>
+  Add
+</button>
