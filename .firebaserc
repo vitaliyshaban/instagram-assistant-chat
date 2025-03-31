@@ -1,0 +1,19 @@
+{
+  "projects": {
+    "default": "alesiafitness-firebase"
+  },
+  "targets": {
+    "alesiafitness-firebase": {
+      "hosting": {
+        "admin": [
+          "alesiafitness-firebase"
+        ],
+        "client": [
+          "alesia-fitness"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

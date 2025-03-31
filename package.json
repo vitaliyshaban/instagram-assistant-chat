@@ -1,0 +1,16 @@
+{
+  "name": "alesia.fitness-admin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "firebase emulators:start --import=./emulator-data --export-on-exit",
+    "deploy": "firebase deploy",
+    "deploy-admin": "firebase deploy --only hosting:admin",
+    "deploy-admin-beta": "firebase hosting:channel:deploy alesia-fitness-admin",
+    "deploy-fn": "firebase deploy --only functions",
+    "deploy-client": "firebase deploy --only hosting:client"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
